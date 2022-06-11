@@ -12,7 +12,7 @@ typedef struct MT19937{
 // Generate 32 bit Natural Numbers
 unsigned long MT_GenNat(MT19937*);
 // Generate 32 bit floating point numbers in the range [0, 1]
-float MT_GenReal(MT19937*);
+double MT_GenReal(MT19937*);
 // Seed the Mersenne Twister 
 void SeedMT(unsigned long, MT19937*);
 

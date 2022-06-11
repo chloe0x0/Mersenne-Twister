@@ -17,9 +17,9 @@
 #define CONSTANT_SEED 4357
 
 
-void SeedMT(MT19937* mt, unsigned long seed){
+void SeedMT(unsigned long seed, MT19937* mt){
     mt->state[0] = seed & 0xffffffff;
-    for (mt->index = 1; mt->index < N; mt->index++){
+    for (mt->index = 1; mt->index < N_32; mt->index++){
         mt->state[mt->index] = (F * mt->state[mt->index - 1]) & 0xffffffff;
     }
 }
@@ -28,25 +28,25 @@ unsigned long MT_GenNat(MT19937* mt){
     unsigned long y;
     const unsigned long mag[2] = {0x0, A};
     
-    if (mt->index >= N){
+    if (mt->index >= N_32){
         // Check for seed
         // If not seeded, seed with some constant (The original paper uses the seed: 4357)
-        if (mt->index == N + 1){ SeedMT(mt, CONSTANT_SEED); }
+        if (mt->index == N_32 + 1){ SeedMT(CONSTANT_SEED, mt); }
         
         int kk = 0;
         
-        for (; kk < N - M; kk++){
+        for (; kk < N_32 - M; kk++){
             y = (mt->state[kk] & U_MASK) | (mt->state[kk + 1] & L_MASK);
             mt->state[kk] = mt->state[kk + M] ^ (y >> 1) ^ mag[y & 0x1];
         }
 
-        for (; kk < N - 1; kk++){
+        for (; kk < N_32 - 1; kk++){
             y = (mt->state[kk] & U_MASK) | (mt->state[kk + 1] & L_MASK);
-            mt->state[kk] = mt->state[kk + (M - N)] ^ (y >> 1) ^ mag[y & 0x1];
+            mt->state[kk] = mt->state[kk + (M - N_32)] ^ (y >> 1) ^ mag[y & 0x1];
         }
 
-        y = (mt->state[N - 1] & U_MASK) | (mt->state[0] & L_MASK);
-        mt->state[N - 1] = mt->state[M - 1] ^ (y >> 1) ^ mag[y & 0x1];
+        y = (mt->state[N_32 - 1] & U_MASK) | (mt->state[0] & L_MASK);
+        mt->state[N_32 - 1] = mt->state[M - 1] ^ (y >> 1) ^ mag[y & 0x1];
 
         mt->index = 0;
     }
@@ -61,5 +61,5 @@ unsigned long MT_GenNat(MT19937* mt){
 }
 
 double MT_GenReal(MT19937* mt){
-    return (double)(GenMTNat(mt)) / 0xffffffffUL;
+    return (double)(MT_GenNat(mt)) / 0xffffffffUL;
 }
