@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "MT19937.h"
 
-#define M       397
-#define F       69069
+#define M        397
+#define F        69069
 
 #define A        0x9908b0df // constant coefficients of the twist matrix
 
@@ -15,7 +15,6 @@
 
 // If the MT struct is not seeded, this seed will be used (taken from the original paper's C implementation)
 #define CONSTANT_SEED 4357
-
 
 void SeedMT(unsigned long seed, MT19937* mt){
     mt->state[0] = seed & 0xffffffff;
@@ -62,4 +61,3 @@ unsigned long MT_GenNat(MT19937* mt){
 
 double MT_GenReal(MT19937* mt){
     return (double)(MT_GenNat(mt)) / 0xffffffffUL;
-}
