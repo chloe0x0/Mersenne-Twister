@@ -61,3 +61,5 @@ unsigned long MT_GenNat(MT19937* mt){
 
 double MT_GenReal(MT19937* mt){
     return (double)(MT_GenNat(mt)) / 0xffffffffUL;
+}
+
