@@ -56,7 +56,7 @@ unsigned long long GenNat_64(MT19937_64* mt){
     y ^= (y >> 29 ) & T_MASK_D;
     y ^= (y << 17 ) & T_MASK_B;
     y ^= (y << 37 ) & T_MASK_C;
-    y ^= (y << 43 );
+    y ^= (y >> 43 );
 
     return y;
 }
