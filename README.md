@@ -35,5 +35,8 @@ int main(void){
 
 *C program on page 22*
 
+### Original MT19937-64 C Code 
+[A C-program for MT19937-64](http://www.math.sci.hiroshima-u.ac.jp/m-mat/MT/VERSIONS/C-LANG/mt19937-64.c)
+
 ## Additional Resources
 [Wikipedia](https://en.wikipedia.org/wiki/Mersenne_Twister)
